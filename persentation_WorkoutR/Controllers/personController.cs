@@ -37,6 +37,7 @@ namespace persentation_WorkoutR.Controllers
         // hashing password
         static bool VerifyMd5Hash(MD5 md5Hash, string password, string hash)
         {
+            //
             string hashOfInput = GetMd5Hash(md5Hash, password);
             StringComparer comparer = StringComparer.OrdinalIgnoreCase;
             if (0 == comparer.Compare(hashOfInput, hash))
