@@ -8,7 +8,7 @@ namespace businessLogicLayer.Objects
 {
     public class BL_routineWorkout
     {
-        // constructors
+        // constructors 
         public int routineWorkoutID { get; set; }
         public string routineWorkoutName { get; set; }
         public int FK_exerciseID { get; set; }
@@ -22,6 +22,7 @@ namespace businessLogicLayer.Objects
 
     public class BL_routine
     {
+        // constructors
         public int routineID { get; set; }
         public string routineName { get; set; }
         public int FK_personID { get; set; }

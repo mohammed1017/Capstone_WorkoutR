@@ -38,7 +38,6 @@ namespace dataAccessLayer
                         _command.ExecuteNonQuery();
 
                     }
-
                 }
             }
             catch(Exception _error)
@@ -82,7 +81,7 @@ namespace dataAccessLayer
                 {
                     using (SqlCommand _command = new SqlCommand("sp_viewExercise", _connection))
                     {
-                        // specify whay type of command is to be used
+                        // specify what type of command is to be used
                         _command.CommandType = CommandType.StoredProcedure;
 
                         _connection.Open();
@@ -143,13 +142,11 @@ namespace dataAccessLayer
 
                         // this is where we will execute the command
                         _command.ExecuteNonQuery();
-
                     }
-
                 }
             }
             catch(Exception _error)
-            {
+            {                
                 _logger.logError(_error);
             }
         }

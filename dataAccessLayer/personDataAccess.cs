@@ -169,7 +169,6 @@ namespace dataAccessLayer
                         _command.ExecuteNonQuery();
 
                     }
-
                 }
             }
             catch (Exception _error)
@@ -219,7 +218,6 @@ namespace dataAccessLayer
                             {
                                 Console.WriteLine("No data found");
                             }
-
                     }
                 }
             }
@@ -259,7 +257,6 @@ namespace dataAccessLayer
                                     rolesToList.roleID = _reader.GetInt32(_reader.GetOrdinal("roleID"));
                                     rolesToList.roleName = (string)_reader["roleName"];
                                     rolesToList.roleDescription = (string)_reader["roleDescription"];
-
 
                                     // adding values to varibale _personList.add
                                     _rolesList.Add(rolesToList);
@@ -305,18 +302,14 @@ namespace dataAccessLayer
                         _command.ExecuteNonQuery();
 
                     }
-
                 }
             }
-
 
             catch (Exception _error)
             {
                 // putting error into a file
                 _logger.logError(_error);
             }
-
-
         }
     }
 }

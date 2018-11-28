@@ -37,7 +37,7 @@ namespace persentation_WorkoutR.Controllers
             if ((int)Session["FK_roleID"] == 1 || (int)Session["FK_roleID"] == 2 || (int)Session["FK_roleID"] == 3 && _addRoutine.FK_personID == (int)Session["personID"])
             {
                 try
-                {                
+                {
                     // if model state is valid
                     if (ModelState.IsValid)
                     {
@@ -45,7 +45,8 @@ namespace persentation_WorkoutR.Controllers
                         {
                             // adding routine back to the database 
                             _routineDataAccess.addingRoutine(_mapper.map(_addRoutine));
-                            // redirecting back to view Routine                        
+
+                            // redirecting back to view Routine   
                             return RedirectToAction("viewRoutine");
                         }
                         catch (Exception _error)
@@ -125,40 +126,26 @@ namespace persentation_WorkoutR.Controllers
             {
                 try
                 {
-                    // if model state is valid
-                    if (ModelState.IsValid)
+                    // making int variable personid to view routines for that member
+                    int _personID = (int)Session["personID"];
+
+                    // new instance of view model 
+                    viewModel viewRoutine = new viewModel();
+                    // getting the list from view model to map it the data access to view all routines
+                    viewRoutine.routineList = _mapper.map(_routineDataAccess.listAllRoutine(_personID));
+
+
+                    //making a for loop to count total sets and reps for the routine
+                    for (int i = 0; i < viewRoutine.routineList.Count(); i++)
                     {
-                        try
-                        {
-                            // making int variable personid to view routines for that member
-                            int _personID = (int)Session["personID"];
-
-                            // new instance of view model 
-                            viewModel viewRoutine = new viewModel();
-                            // getting the list from view model to map it the data access to view all routines
-                            viewRoutine.routineList = _mapper.map(_routineDataAccess.listAllRoutine(_personID));
-
-
-                            //making a for loop to count total sets and reps for the routine
-                            for (int i = 0; i < viewRoutine.routineList.Count(); i++)
-                            {
-                                // making an int variable to hold routineid
-                                int _routineID = viewRoutine.routineList[i].routineID;
-                                // make data access object with listing single routine
-                                routineDAO routine = _routineDataAccess.listSingleRoutine(_personID, _routineID);
-                                // calling in the business logic layer with the object and routine and person id's
-                                _workoutLogic.addSets(_blMapper.map(routine), _routineID, _personID);
-                            }
-                            return View(viewRoutine);
-                            
-                        }
-                        catch (Exception _error)
-                        {
-                            // putting error into a file
-                            _logger.logError(_error);
-                        }
+                        // making an int variable to hold routineid
+                        int _routineID = viewRoutine.routineList[i].routineID;
+                        // make data access object with listing single routine
+                        routineDAO routine = _routineDataAccess.listSingleRoutine(_personID, _routineID);
+                        // calling in the business logic layer with the object and routine and person id's
+                        _workoutLogic.addSets(_blMapper.map(routine), _routineID, _personID);
                     }
-                    return View();
+                    return View(viewRoutine);
                 }
                 catch (Exception _error)
                 {
@@ -175,29 +162,14 @@ namespace persentation_WorkoutR.Controllers
         {
             if ((int)Session["FK_roleID"] == 1 || (int)Session["FK_roleID"] == 2 || (int)Session["FK_roleID"] == 3)
             {
-
-
                 try
                 {
-                    // if model state is valid
-                    if (ModelState.IsValid)
-                    {
-                        try
-                        {
-                            //  making session id routine and person id with routine model
-                            Session["routineID"] = routine.routineID;
-                            Session["FK_personID"] = routine.FK_personID;
+                    //  making session id routine and person id with routine model
+                    Session["routineID"] = routine.routineID;
+                    Session["FK_personID"] = routine.FK_personID;
 
-                            // returning view of routine 
-                            return View(routine);
-                        }
-                        catch (Exception _error)
-                        {
-                            // putting error into a file
-                            _logger.logError(_error);
-                        }
-                    }
-                    return View();
+                    // returning view of routine 
+                    return View(routine);
                 }
                 catch (Exception _error)
                 {
@@ -216,23 +188,10 @@ namespace persentation_WorkoutR.Controllers
             {
                 try
                 {
-                    // if model state is valid
-                    if (ModelState.IsValid)
-                    {
-                        try
-                        {
-                            // deleting routine based on the routine id in the database
-                            _routineDataAccess.deletingRoutine(_deleteRoutine);
-                            // redirecting back to view routines
-                            return RedirectToAction("viewRoutine");
-                        }
-                        catch (Exception _error)
-                        {
-                            // putting error into a file
-                            _logger.logError(_error);
-                        }
-                    }
-                    return View();
+                    // deleting routine based on the routine id in the database
+                    _routineDataAccess.deletingRoutine(_deleteRoutine);
+                    // redirecting back to view routines
+                    return RedirectToAction("viewRoutine");
                 }
                 catch (Exception _error)
                 {

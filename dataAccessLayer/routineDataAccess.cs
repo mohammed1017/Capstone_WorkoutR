@@ -43,7 +43,6 @@ namespace dataAccessLayer
                         _command.ExecuteNonQuery();
 
                     }
-
                 }
             }
             catch(Exception _error)
@@ -90,6 +89,8 @@ namespace dataAccessLayer
                         _command.CommandType = CommandType.StoredProcedure;
 
                         _command.Parameters.AddWithValue("@personID", personID);
+
+                        //attempt to open connection
                         _connection.Open();
                         using (SqlDataReader _reader = _command.ExecuteReader())
                         {
@@ -158,7 +159,6 @@ namespace dataAccessLayer
                         _command.ExecuteNonQuery();
 
                     }
-
                 }
             }
             catch(Exception _error)
@@ -185,7 +185,6 @@ namespace dataAccessLayer
                         _command.Parameters.AddWithValue("@routineWExercise", _routineSetsReps.totalExercise);
                         _command.Parameters.AddWithValue("@routineID", routineID);
 
-
                         // this is where the connection is open
                         _connection.Open();
 
@@ -193,7 +192,6 @@ namespace dataAccessLayer
                         _command.ExecuteNonQuery();
 
                     }
-
                 }
             }
             catch (Exception _error)
@@ -219,6 +217,7 @@ namespace dataAccessLayer
                         _command.Parameters.AddWithValue("@personID", personID);
                         _command.Parameters.AddWithValue("@routineID", routineID);
 
+                        //attempt to open connection
                         _connection.Open();
                         using (SqlDataReader _reader = _command.ExecuteReader())
                         {

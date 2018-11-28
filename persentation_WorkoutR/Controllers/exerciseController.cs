@@ -118,23 +118,10 @@ namespace persentation_WorkoutR.Controllers
             {
                 try
                 {
-                    // if model state is valid
-                    if (ModelState.IsValid)
-                    {
-                        try
-                        {
-                            // making session variable using exercise model 
-                            Session["exerciseID"] = _updateExercise.exerciseID;
-                            // return back update exercise view 
-                            return View(_updateExercise);
-                        }
-                        catch (Exception _error)
-                        {
-                            // putting error into a file
-                            _logger.logError(_error);
-                        }
-                    }
-                    return View();
+                    // making session variable using exercise model 
+                    Session["exerciseID"] = _updateExercise.exerciseID;
+                    // return back update exercise view 
+                    return View(_updateExercise);
                 }
                 catch (Exception _error)
                 {
@@ -142,6 +129,7 @@ namespace persentation_WorkoutR.Controllers
                     _logger.logError(_error);
                 }
             }
+
             return View("Error");
         }
 
@@ -152,23 +140,10 @@ namespace persentation_WorkoutR.Controllers
             {
                 try
                 {
-                    // if model state is valid
-                    if (ModelState.IsValid)
-                    {
-                        try
-                        {
-                            // delete exercise from the database with the exercise id
-                            _exerciseDataAccess.deletingExercise(_deleteExercise);
-                            // return back to exercise view
-                            return RedirectToAction("viewExercise");
-                        }
-                        catch (Exception _error)
-                        {
-                            // putting error into a file
-                            _logger.logError(_error);
-                        }
-                    }
-                    return View();
+                    // delete exercise from the database with the exercise id
+                    _exerciseDataAccess.deletingExercise(_deleteExercise);
+                    // return back to exercise view
+                    return RedirectToAction("viewExercise");
                 }
                 catch (Exception _error)
                 {
@@ -186,25 +161,13 @@ namespace persentation_WorkoutR.Controllers
             {
                 try
                 {
-                    // if model state is valid
-                    if (ModelState.IsValid)
-                    {
-                        try
-                        {
-                            // making new instance of the view model 
-                            viewModel viewExercise = new viewModel();
-                            // listing all exercises into exercise list from the database
-                            viewExercise.exerciseList = _mapper.map(_exerciseDataAccess.listAllExercise());
-                            // returning back the viewExercise page with the list
-                            return View(viewExercise);
-                        }
-                        catch (Exception _error)
-                        {
-                            // putting error into a file
-                            _logger.logError(_error);
-                        }
-                    }
-                    return View();
+
+                    // making new instance of the view model 
+                    viewModel viewExercise = new viewModel();
+                    // listing all exercises into exercise list from the database
+                    viewExercise.exerciseList = _mapper.map(_exerciseDataAccess.listAllExercise());
+                    // returning back the viewExercise page with the list
+                    return View(viewExercise);
                 }
                 catch (Exception _error)
                 {

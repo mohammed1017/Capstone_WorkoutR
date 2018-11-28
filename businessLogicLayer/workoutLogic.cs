@@ -12,13 +12,15 @@ namespace businessLogicLayer
 {
     public class workoutLogic
     {
+        // new instance of the logger
         static logger _logger = new logger();
+        // new instane of routine data access
         routineDataAccess routineData = new routineDataAccess();
+        // new instance of routine Workout data access
         routineWorkoutDataAccess routineWData = new routineWorkoutDataAccess();
+        // business logic mapper
         BL_mapper _mapper = new BL_mapper();
 
-
-        // BL_routineWorkout routineW = new BL_routineWorkout();
 
         public void addSets(BL_routine routine, int routineID, int personID)
         {
@@ -51,9 +53,9 @@ namespace businessLogicLayer
                     }
                 }
 
-                int sets = 0;
-                int reps = 0;
-                int exercise = BL_routineWList.Count;
+                int sets = 0;// setting sets to 0
+                int reps = 0;// setting reps to 0
+                int exercise = BL_routineWList.Count;// using the the count of routine list and setting as exercise
 
                 routineWorkoutList.FK_routineWorkoutID = routine.routineID;
                 // for loop for going through the list of routines 

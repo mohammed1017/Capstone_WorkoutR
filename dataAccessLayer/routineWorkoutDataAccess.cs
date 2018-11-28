@@ -41,7 +41,6 @@ namespace dataAccessLayer
                         _command.ExecuteNonQuery();
 
                     }
-
                 }
             }
             catch(Exception _error)
@@ -149,15 +148,12 @@ namespace dataAccessLayer
                         _command.Parameters.AddWithValue("@routineWReps", updateRoutineWorkout.routineWReps);
                         _command.Parameters.AddWithValue("@routineWRest", updateRoutineWorkout.routineWRest);
 
-
                         // this is where the connection is open
                         _connection.Open();
 
                         // this is where we will execute the command
                         _command.ExecuteNonQuery();
-
                     }
-
                 }
             }
             catch(Exception _error)

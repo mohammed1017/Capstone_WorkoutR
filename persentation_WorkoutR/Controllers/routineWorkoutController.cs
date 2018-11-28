@@ -122,20 +122,28 @@ namespace persentation_WorkoutR.Controllers
         {
             if ((int)Session["FK_roleID"] == 1 || (int)Session["FK_roleID"] == 2 || (int)Session["FK_roleID"] == 3)
             {
-                // making new instance of the view model
-                viewModel viewExercise = new viewModel();
-                // using the database of all exercise and adding back to exercise list
-                viewExercise.exerciseList = _mapper.map(_exerciseData.listAllExercise());
+                try
+                {
+                    // making new instance of the view model
+                    viewModel viewExercise = new viewModel();
+                    // using the database of all exercise and adding back to exercise list
+                    viewExercise.exerciseList = _mapper.map(_exerciseData.listAllExercise());
 
-                // making new instance of routineWorkout model
-                routineWorkoutModel routineWorkoutModel = new routineWorkoutModel();
-                // populating the routineWorkoutmodel exercise list with view model exercise listt
-                routineWorkoutModel.exerciseList = viewExercise.exerciseList;
-                // setting variable view exercise to the routine workout model exercise list
-                Session["viewExercise"] = routineWorkoutModel.exerciseList;
+                    // making new instance of routineWorkout model
+                    routineWorkoutModel routineWorkoutModel = new routineWorkoutModel();
+                    // populating the routineWorkoutmodel exercise list with view model exercise listt
+                    routineWorkoutModel.exerciseList = viewExercise.exerciseList;
+                    // setting variable view exercise to the routine workout model exercise list
+                    Session["viewExercise"] = routineWorkoutModel.exerciseList;
 
-                // return the view  with routine workout model
-                return View(routineWorkoutModel);
+                    // return the view  with routine workout model
+                    return View(routineWorkoutModel);
+                }
+                catch (Exception _error)
+                {
+                    // putting error into a file
+                    _logger.logError(_error);
+                }
             }
 
             return View("Error");
@@ -187,38 +195,24 @@ namespace persentation_WorkoutR.Controllers
             {
                 try
                 {
-                    // if model state is valid
-                    if (ModelState.IsValid)
-                    {
-                        try
-                        {
-                            // making new instance of view model
-                            viewModel viewExercise = new viewModel();
-                            // poplating exercise model, exercise list from database
-                            viewExercise.exerciseList = _mapper.map(_exerciseData.listAllExercise());
+                    // making new instance of view model
+                    viewModel viewExercise = new viewModel();
+                    // poplating exercise model, exercise list from database
+                    viewExercise.exerciseList = _mapper.map(_exerciseData.listAllExercise());
 
-                            routineWorkoutModel routineWorkoutModel = new routineWorkoutModel();
-                            routineWorkoutModel.exerciseList = viewExercise.exerciseList;
-                            Session["viewExercise"] = routineWorkoutModel.exerciseList;
+                    routineWorkoutModel routineWorkoutModel = new routineWorkoutModel();
+                    routineWorkoutModel.exerciseList = viewExercise.exerciseList;
+                    Session["viewExercise"] = routineWorkoutModel.exerciseList;
 
 
-                            // setting session varibale routineWorkoutID to routineWorkoutID
-                            Session["routineWorkoutID"] = routineWorkout.routineWorkoutID;
+                    // setting session varibale routineWorkoutID to routineWorkoutID
+                    Session["routineWorkoutID"] = routineWorkout.routineWorkoutID;
 
-                            // setting exercise list to view exercise model exercise list
-                            routineWorkout.exerciseList = viewExercise.exerciseList;
+                    // setting exercise list to view exercise model exercise list
+                    routineWorkout.exerciseList = viewExercise.exerciseList;
 
-                            // return view, routine Workout
-                            return View(routineWorkout);
-
-                        }
-                        catch (Exception _error)
-                        {
-                            // putting error into a file
-                            _logger.logError(_error);
-                        }
-                    }
-                    return View();
+                    // return view, routine Workout
+                    return View(routineWorkout);
                 }
                 catch (Exception _error)
                 {
@@ -237,22 +231,17 @@ namespace persentation_WorkoutR.Controllers
             {
                 try
                 {
-                    // if model state is valid 
-                    if (ModelState.IsValid)
-                    {
-                        // deleting the routineWorkout based to the ID from the database
-                        _routineWorkoutDataAccess.deletingRoutineWorkout(_deleteRoutineWorkout);
+                    // deleting the routineWorkout based to the ID from the database
+                    _routineWorkoutDataAccess.deletingRoutineWorkout(_deleteRoutineWorkout);
 
-                        // making new instance of the routine
-                        routineModel modelforid = new routineModel();
+                    // making new instance of the routine
+                    routineModel modelforid = new routineModel();
 
-                        // setting routineID to the session fk_routineworkout ID
-                        modelforid.routineID = (int)Session["FK_routineWorkoutID"];
+                    // setting routineID to the session fk_routineworkout ID
+                    modelforid.routineID = (int)Session["FK_routineWorkoutID"];
 
-                        // redirect back to new routineworkout using model for id model
-                        return RedirectToAction("viewRoutineWorkout", modelforid);
-                    }
-                    return View();
+                    // redirect back to new routineworkout using model for id model
+                    return RedirectToAction("viewRoutineWorkout", modelforid);
                 }
                 catch (Exception _error)
                 {
@@ -260,6 +249,7 @@ namespace persentation_WorkoutR.Controllers
                     _logger.logError(_error);
                 }
             }
+
             // return error page
             return View("Error");
         }

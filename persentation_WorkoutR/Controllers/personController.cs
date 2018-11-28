@@ -25,25 +25,32 @@ namespace persentation_WorkoutR.Controllers
         // hashing the password
         static string GetMd5Hash(MD5 md5Hash, string password)
         {
+            // convert the input string to a byte array and compute the hash.
             byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(password));
+
+            //Create a new stringbuilder to collect the bytes
+            // and create a string.
             StringBuilder sBuilder = new StringBuilder();
+
+            //loop through each byte of the hashed data
+            // and format each one as a hexadecimal string.
             for (int i = 0; i < data.Length; i++)
             {
                 sBuilder.Append(data[i].ToString("x2"));
             }
-
+            // return the hexadecimal string.
             return sBuilder.ToString();
         }
-        // hashing password
+        // verify the hash against a string .
         static bool VerifyMd5Hash(MD5 md5Hash, string password, string hash)
         {
-            //
+            //hash the inout
             string hashOfInput = GetMd5Hash(md5Hash, password);
+            // create a Stringcomparer and compare the hashes.
             StringComparer comparer = StringComparer.OrdinalIgnoreCase;
             if (0 == comparer.Compare(hashOfInput, hash))
             {
                 return true;
-
             }
             else
             {
@@ -73,12 +80,15 @@ namespace persentation_WorkoutR.Controllers
                         // setting up a user model to return from user  login
                         personModel _personMod = new personModel();
 
-
+                        // hashing the password
                         using (MD5 md5hash = MD5.Create())
                         {
+
                             string hash = GetMd5Hash(md5hash, _person.personPassword);
+                            // checking if hash password is same as input hash
                             if (VerifyMd5Hash(md5hash, _person.personPassword, hash))
                             {
+                                // setting hashed password to person password
                                 _person.personPassword = hash;
                             }
                         }
@@ -311,30 +321,18 @@ namespace persentation_WorkoutR.Controllers
                 // checking if the role id is 2 or 3 to view the memebers
                 if ((int)Session["FK_roleID"] == 2 || (int)Session["FK_roleID"] == 3)
                 {
-                    // checking if model state is valid
-                    if (ModelState.IsValid)
-                    {
-                        try
-                        {
-                            // making new insatance of view model called person view
-                            viewModel personView = new viewModel();
 
-                            // getting access to the database to list all the members
-                            personView.personList = _mapper.map(_personDataAccess.listAllPerson());
+                    // making new insatance of view model called person view
+                    viewModel personView = new viewModel();
 
-                            // storing the person list into the role list in preson view model  
-                            personView.roleList = _mapper.map(_personDataAccess.listAllRoles());
+                    // getting access to the database to list all the members
+                    personView.personList = _mapper.map(_personDataAccess.listAllPerson());
 
-                            Session["viewRoles"] = personView.roleList;
-                            return View(personView);
-                        }
-                        catch (Exception _error)
-                        {
-                            // putting error into a file
-                            _logger.logError(_error);
-                        }
-                    }
-                    return View();
+                    // storing the person list into the role list in preson view model  
+                    personView.roleList = _mapper.map(_personDataAccess.listAllRoles());
+
+                    Session["viewRoles"] = personView.roleList;
+                    return View(personView);
                 }
             }
             catch (Exception _error)
@@ -388,8 +386,7 @@ namespace persentation_WorkoutR.Controllers
             // checking if role ID is 3
             if ((int)Session["FK_RoleID"] == 3)
             {
-                // if model state is valid
-                if (ModelState.IsValid)
+                try
                 {
                     // deleting the person in database with the personID
                     _personDataAccess.deletingPerson(_deletePerson);
@@ -397,7 +394,11 @@ namespace persentation_WorkoutR.Controllers
                     // return back to person view
                     return RedirectToAction("viewPerson");
                 }
-                return View();
+                catch (Exception _error)
+                {
+                    // putting error into a file
+                    _logger.logError(_error);
+                }
             }
             // return to error page
             return View("Error");
@@ -408,36 +409,25 @@ namespace persentation_WorkoutR.Controllers
         [ActionName("updateRoles")]
         public ActionResult updateRolesG(int roleID, int personID)
         {
-            try
+            // checking if roleID is 3
+            if ((int)Session["FK_roleID"] == 3)
             {
-                // checking if roleID is 3
-                if ((int)Session["FK_roleID"] == 3)
+                try
                 {
-                    // if model state is valid
-                    if (ModelState.IsValid)
-                    {
-                        try
-                        {
-                            // updating the roles based of role and person ID
-                            _personDataAccess.updateRoles(roleID, personID);
+                    // updating the roles based of role and person ID
+                    _personDataAccess.updateRoles(roleID, personID);
 
-                            // redirecting to view Person
-                            return RedirectToAction("viewPerson");
-                        }
-                        catch (Exception _error)
-                        {
-                            // putting error into a file
-                            _logger.logError(_error);
-                        }
-                    }
-                    return View();
+                    // redirecting to view Person
+                    return RedirectToAction("viewPerson");
+
+                }
+                catch (Exception _error)
+                {
+                    // putting error into a file
+                    _logger.logError(_error);
                 }
             }
-            catch (Exception _error)
-            {
-                // putting error into a file
-                _logger.logError(_error);
-            }
+
             return View("Error");
         }
 
