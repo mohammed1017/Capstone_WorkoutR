@@ -34,7 +34,7 @@ namespace persentation_WorkoutR.Controllers
         [HttpPost]
         public ActionResult addRoutine(routineModel _addRoutine)
         {
-            if ((int)Session["FK_roleID"] == 1 || (int)Session["FK_roleID"] == 2 || (int)Session["FK_roleID"] == 3)
+            if ((int)Session["FK_roleID"] == 1 || (int)Session["FK_roleID"] == 2 || (int)Session["FK_roleID"] == 3 && _addRoutine.FK_personID == (int)Session["personID"])
             {
                 try
                 {                

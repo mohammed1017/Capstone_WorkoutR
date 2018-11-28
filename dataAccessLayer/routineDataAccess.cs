@@ -142,7 +142,7 @@ namespace dataAccessLayer
                         // specify whay type of command is to be used
                         _command.CommandType = CommandType.StoredProcedure;
 
-                        //where the values are sen to the command
+                        //where the values are sent to the command
                         _command.Parameters.AddWithValue("@routineID", updateRoutine.routineID);
                         _command.Parameters.AddWithValue("@routineName", updateRoutine.routineName);
                         _command.Parameters.AddWithValue("@FK_personID", updateRoutine.FK_personID);
