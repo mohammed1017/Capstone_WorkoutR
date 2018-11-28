@@ -64,7 +64,7 @@ namespace persentation_WorkoutR.Controllers
         [HttpPost]
         public ActionResult updateExercise(exerciseModel _updateExercise)
         {
-            if ((int)Session["FK_roleID"] == 2 || (int)Session["FK_roleID"] == 2)
+            if ((int)Session["FK_roleID"] == 2 || (int)Session["FK_roleID"] == 3)
             {
                 try
                 {

@@ -70,6 +70,7 @@
     @if ((int)Session["FK_roleID"] == 1 || (int)Session["FK_roleID"] == 2 || (int)Session["FK_roleID"] == 3)
     {
         @Html.ActionLink("Edit Profile", "updatePerson", "person", Model, null) <i style="padding:10px"></i>
+        <br />
         @Html.ActionLink("Update User/Password", "updatePassPerson", "person", Model, null)
         <br />
     }
