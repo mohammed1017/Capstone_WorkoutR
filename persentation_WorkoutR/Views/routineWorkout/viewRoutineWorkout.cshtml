@@ -6,19 +6,18 @@
 
 <br />
 <h1>Routine Exercises</h1>
-<br /><br />
- @Html.ActionLink("Back to Routine", "viewRoutine", "routine")
+@Html.ActionLink("Back to Routine", "viewRoutine", "routine")
+<br /><br /><br />
 
-  
 @using (Html.BeginForm("viewRoutineWorkout", "routineWorkout", FormMethod.Post))
 {
     <table style="width:100%; font-size: 16px">
         <colgroup span="2" align="left"></colgroup>
         <colgroup align="right"></colgroup>
-        
-        
+
+
         <tr>
-            <th>Exercise</th >
+            <th>Exercise</th>
             <th>Sets</th>
             <th>Reps</th>
             <th>Rest</th>
