@@ -24,7 +24,7 @@ namespace dataAccessLayer
                 {
                     using (SqlCommand _command = new SqlCommand("sp_addRoutineWorkout", _connection))
                     {
-                        // specify whay type of command is to be used
+                        // specify what type of command is to be used
                         _command.CommandType = CommandType.StoredProcedure;
 
                         //where the values are sent to the command

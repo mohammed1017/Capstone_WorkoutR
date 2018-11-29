@@ -2563,3 +2563,12 @@ StackTrace:    at persentation_WorkoutR.Controllers.personController.viewPerson(
 Message: Object reference not set to an instance of an object.
 TargetSite: System.Web.Mvc.ActionResult viewPerson()
 -------------------------------
+Time: 11/29/2018 1:29:38 PM
+-------------------------------
+StackTrace:    at System.Text.Encoding.GetBytes(String s)
+   at persentation_WorkoutR.Controllers.personController.GetMd5Hash(MD5 md5Hash, String password) in C:\Users\Onshore\source\repos\Workout_Routine\persentation_WorkoutR\Controllers\personController.cs:line 29
+   at persentation_WorkoutR.Controllers.personController.register(personModel _addPerson) in C:\Users\Onshore\source\repos\Workout_Routine\persentation_WorkoutR\Controllers\personController.cs:line 142
+Message: String reference not set to an instance of a String.
+Parameter name: s
+TargetSite: Byte[] GetBytes(System.String)
+-------------------------------
